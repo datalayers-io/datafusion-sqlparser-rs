@@ -615,6 +615,16 @@ pub trait Dialect: Debug + Any {
         false
     }
 
+    /// Return true if the dialect supports angle-bracket STRUCT type definitions.
+    ///
+    /// Example
+    /// ```sql
+    /// CREATE TABLE t (payload STRUCT<a INT, b STRING>)
+    /// ```
+    fn supports_angle_bracket_struct_type(&self) -> bool {
+        false
+    }
+
     /// Return true if the dialect supports empty projections in SELECT statements
     ///
     /// Example

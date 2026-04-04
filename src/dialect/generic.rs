@@ -169,6 +169,10 @@ impl Dialect for GenericDialect {
         true
     }
 
+    fn supports_angle_bracket_struct_type(&self) -> bool {
+        true
+    }
+
     fn supports_empty_projections(&self) -> bool {
         true
     }

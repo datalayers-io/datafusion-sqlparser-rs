@@ -3336,12 +3336,7 @@ impl<'a> Parser<'a> {
         F: FnMut(&mut Parser<'a>) -> Result<(StructField, MatchedTrailingBracket), ParserError>,
     {
         self.expect_keyword_is(Keyword::STRUCT)?;
-
-        // Nothing to do if we have no type information.
-        if Token::Lt != self.peek_token() {
-            return Ok((Default::default(), false.into()));
-        }
-        self.next_token();
+        self.expect_token(&Token::Lt)?;
 
         let mut field_defs = vec![];
         let trailing_bracket = loop {
@@ -11917,7 +11912,7 @@ impl<'a> Parser<'a> {
                     let field_defs = self.parse_duckdb_struct_type_def()?;
                     Ok(DataType::Struct(field_defs, StructBracketKind::Parentheses))
                 }
-                Keyword::STRUCT if dialect_is!(dialect is BigQueryDialect | GenericDialect) => {
+                Keyword::STRUCT if self.dialect.supports_angle_bracket_struct_type() => {
                     self.prev_token();
                     let (field_defs, _trailing_bracket) =
                         self.parse_struct_type_def(Self::parse_struct_field_def)?;
