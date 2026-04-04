@@ -126,6 +126,10 @@ impl Dialect for BigQueryDialect {
         true
     }
 
+    fn supports_angle_bracket_struct_type(&self) -> bool {
+        true
+    }
+
     /// See <https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#select_expression_star>
     fn supports_select_expr_star(&self) -> bool {
         true
